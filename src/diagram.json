@@ -1,0 +1,63 @@
+{
+  "version": 1,
+  "author": "Giogio",
+  "editor": "wokwi",
+  "parts": [
+    { "type": "wokwi-esp32-devkit-v1", "id": "esp", "top": 0, "left": 0, "attrs": {} },
+    { "type": "wokwi-dht22", "id": "dht22", "top": -153.3, "left": -101.4, "attrs": {} },
+    { "type": "wokwi-mpu6050", "id": "mpu", "top": 243.82, "left": -180.08, "attrs": {} },
+    { "type": "wokwi-hc-sr04", "id": "ultrasonic", "top": -94.5, "left": 226.3, "attrs": {} },
+    { "type": "wokwi-servo", "id": "servo1", "top": 199.6, "left": 403.2, "attrs": {} },
+    { "type": "wokwi-servo", "id": "servo2", "top": 314.8, "left": 403.2, "attrs": {} },
+    { "type": "wokwi-ssd1306", "id": "oled", "top": -156.5, "left": 568.3, "attrs": {} },
+    { "type": "wokwi-buzzer", "id": "buzzer", "top": -74.4, "left": 136.2, "attrs": {} },
+    {
+      "type": "wokwi-photoresistor-sensor",
+      "id": "ldr1",
+      "top": 348.8,
+      "left": 106.4,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-photoresistor-sensor",
+      "id": "ldr2",
+      "top": 348.8,
+      "left": -143.2,
+      "attrs": {}
+    },
+    { "type": "wokwi-microsd-card", "id": "sdcard", "top": -76.57, "left": 451.27, "attrs": {} },
+    { "type": "wokwi-potentiometer", "id": "mq135_sim", "top": -126.1, "left": -269, "attrs": {} }
+  ],
+  "connections": [
+    [ "esp:D21", "mpu:SDA", "green", [] ],
+    [ "esp:D22", "mpu:SCL", "green", [] ],
+    [ "esp:D21", "oled:SDA", "green", [] ],
+    [ "esp:D22", "oled:SCL", "green", [] ],
+    [ "esp:D4", "dht22:SDA", "yellow", [] ],
+    [ "esp:D27", "ultrasonic:TRIG", "blue", [] ],
+    [ "esp:D26", "ultrasonic:ECHO", "orange", [] ],
+    [ "esp:D13", "servo1:PWM", "purple", [] ],
+    [ "esp:D12", "servo2:PWM", "purple", [] ],
+    [ "esp:D2", "buzzer:1", "red", [] ],
+    [ "esp:D34", "mq135_sim:SIG", "orange", [] ],
+    [ "esp:D32", "ldr1:AO", "orange", [] ],
+    [ "esp:3V3", "ldr1:VCC", "red", [] ],
+    [ "esp:GND.1", "ldr1:GND", "black", [] ],
+    [ "esp:D33", "ldr2:AO", "orange", [] ],
+    [ "esp:3V3", "ldr2:VCC", "red", [] ],
+    [ "esp:GND.1", "ldr2:GND", "black", [] ],
+    [ "esp:D18", "sdcard:SCK", "blue", [] ],
+    [ "esp:D19", "sdcard:MISO", "green", [] ],
+    [ "esp:D23", "sdcard:MOSI", "yellow", [] ],
+    [ "esp:D5", "sdcard:CS", "purple", [] ],
+    [ "esp:3V3", "sdcard:VCC", "red", [] ],
+    [ "esp:GND.1", "sdcard:GND", "black", [] ],
+    [ "esp:GND.1", "mpu:GND", "black", [] ],
+    [ "esp:GND.1", "dht22:GND", "black", [] ],
+    [ "esp:GND.1", "oled:GND", "black", [] ],
+    [ "esp:3V3", "dht22:VCC", "red", [] ],
+    [ "esp:3V3", "mpu:VCC", "red", [] ],
+    [ "esp:3V3", "oled:VCC", "red", [] ]
+  ],
+  "dependencies": {}
+}
