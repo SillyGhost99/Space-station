@@ -186,4 +186,4 @@ Data & Telemetry Lead — Team Redline Racing (BAJA SAE)
 
 ##  License
 
-MIT License — open for extension and research use.
+MIT License — open for extension and research use......
