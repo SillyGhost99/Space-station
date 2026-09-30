@@ -1,189 +1,56 @@
-#  AETHER-1 — Autonomous Environmental & Telemetry Hub for Extended Research
 
-> A Tiangong-inspired modular space station prototype built for Smart India Hackathon.  
-> Detects, responds to, and predicts environmental anomalies in microgravity habitats — powered by ESP32, real sensor telemetry, CFD simulation, and optional ML inference.
+# Project Sub-zero: Hybrid ISS-Tiangong Smart Space Station Testbed 🛰️
 
----
+![ESP32](https://img.shields.io/badge/Hardware-ESP32-blue)
+![C++](https://img.shields.io/badge/Firmware-C%2B%2B%20%2F%20Arduino-00599C?logo=c%2B%2B)
+![Python](https://img.shields.io/badge/ML-Python%20%2F%20Random%20Forest-FFD43B?logo=python)
+![Simulation](https://img.shields.io/badge/CFD-OpenFOAM%20%2F%20SimScale-red)
+![Status](https://img.shields.io/badge/Status-Prototyping-orange)
 
-## Problem Statement
+**Project Sub-zero** is a physical, ML-enhanced, sensor-driven space station analog testbed. Developed as a 5th-semester mechanical engineering and Smart India Hackathon (SIH) prototype, it merges documented architectural advantages from the ISS (node-hub multi-port design) and China’s Tiangong Space Station (T-shaped layout, intermodule shadowing optimization). 
 
-In crewed space stations, microgravity causes CO₂ to form invisible stagnant pockets near sleeping and working zones — unlike on Earth where convection naturally circulates air. These pockets are invisible, silent, and dangerous. Current detection systems are expensive, centralized, and reactive.
-
-**AETHER-1** is a low-cost, modular, edge-deployable prototype that detects CO₂ stagnation, triggers ventilation response, logs environmental telemetry, and optionally predicts anomalies before they occur using onboard ML inference.
-
----
-
-##  Architecture
-
-```
-┌────────────────────────────────────────────────┐
-│              AETHER-1 Core Module              │
-│                                                │
-│   ESP32 ──► Sensor Array ──► Local Dashboard  │
-│               │                               │
-│           WiFi/MQTT                           │
-│               │                               │
-│         Python Backend ──► Web Dashboard      │
-│               │                               │
-│         [Optional] ML Inference Layer         │
-└────────────────────────────────────────────────┘
-```
-
-**Physical Layout:** T-shaped modular body inspired by Tiangong's core + side module architecture. Core module houses compute and sensors. Side modules represent lab and sleep zones.
+The project demonstrates a complete sense-decide-actuate control loop to solve two critical, unresolved challenges in modern space habitats: microgravity air-stagnation (CO2 pockets) and predictive solar power optimization.
 
 ---
 
-## Hardware Stack
+## 🚀 Key Problem Statements & Solutions
 
-| Component | Role |
-|-----------|------|
-| ESP32 | Main microcontroller, WiFi telemetry |
-| DHT22 | Temperature & Humidity sensing |
-| MPU6050 | Orientation & vibration (microgravity simulation) |
-| MQ135 | Air quality / CO₂ approximation |
-| Solar Panel + TP4056 | Solar recharge simulation |
-| Li-Po Battery | Power simulation for off-grid operation |
-| OLED Display | Local status readout |
-| Mini Fan (PWM) | Ventilation response actuator |
+### 1. Life Support & Microgravity Air Stagnation
+*   **The Problem:** In microgravity, the lack of buoyancy-driven convection causes warm, CO2-rich air to stagnate around astronauts, leading to hypercapnia (CO2 toxicity). Current stations rely on reactive monitoring and localized fans that leave stagnant pockets.
+*   **The Solution (Active ECLSS):** An integrated MQ-135 and DHT22 sensor array maps cabin air quality. The ESP32 logic detects forming CO2 pockets and autonomously actuates localized ventilation (L298N-driven DC fans) to disperse them, while triggering local OLED and buzzer alerts.
 
-**Estimated Budget: ₹1,500 – ₹2,000**
+### 2. Solar Array Efficiency & Intermodule Shadowing
+*   **The Problem:** Complex modular station layouts (like the T-shape) cause intermodule shadowing, heavily degrading power generation. Existing trackers react to light intensity *after* a power drop occurs.
+*   **The Solution (Predictive ML Layer):** A dual-axis solar tracking system augmented with a **Random Forest regression model**. Training on timestamped local telemetry data, the ML layer anticipates efficiency drop-offs and adjusts panel angles *ahead* of the light curve.
 
 ---
 
-##  Features
+## 🛠️ Tech Stack & Methodology
 
-### Core (Implemented)
-- [x] Real-time temperature, humidity, air quality sensing
-- [x] Orientation and vibration logging via MPU6050
-- [x] Automatic ventilation trigger on CO₂ threshold breach
-- [x] Solar panel charge monitoring
-- [x] Local OLED status display
-- [x] WiFi telemetry over MQTT
-- [x] Python dashboard — live plots of all sensor streams
-- [x] Wokwi simulation for hardware validation
-- [x] CFD visualization of CO₂ stagnation zones (simulation software)
+The project follows a **Design-First** engineering methodology:
+`Circuit Simulation ➔ 3D CAD Design ➔ CFD Validation ➔ Physical Build ➔ ML Training ➔ Telemetry Dashboard`
 
-### Optional — ML Extension *(SIH Enhanced Version)*
-- [ ] Anomaly detection model trained on sensor time-series data
-- [ ] Predictive ventilation — triggers fan before threshold is breached
-- [ ] Sensor fusion using MPU6050 + MQ135 for zone-level CO₂ mapping
-- [ ] LSTM or lightweight TFLite model for onboard inference on ESP32
-- [ ] Streamlit dashboard with ML prediction overlay
-- [ ] Data logging pipeline — CSV → Pandas → model retraining loop
-
-### Optional — Extended Features
-- [ ] GPS module integration for navigation simulation display
-- [ ] Multi-zone sensor network (multiple ESP32 nodes, MQTT broker)
-- [ ] Battery health estimation model
-- [ ] Web-based dashboard with historical data and alert logs
-- [ ] 3D-printed T-shaped station body with solar panel mount
-- [ ] Figma UI blueprint for mission control dashboard
+*   **Edge Hardware:** ESP32 (38-pin DevKit)
+*   **Sensors:** MQ-135 (Air Quality), DHT22 (Climate), BMP280 (Pressure/Leak Detection), HC-SR04 (Proximity/Docking), MPU6050 (IMU/Attitude), LDRs (Solar Tracking)
+*   **Actuators:** SG90 Servos (Docking hatch & Solar Tracking), L298N Motor Driver + DC Fans
+*   **Firmware:** C++ (Arduino Framework)
+*   **Machine Learning:** Python (Scikit-Learn, Random Forest Regression)
+*   **Simulation:** Wokwi (Circuit), OpenFOAM / SimScale (Zero-G vs Standard Gravity CFD Airflow Validation)
 
 ---
 
-## 🖥️ Dashboard Preview
+## 🗂️ Repository Structure
 
-> Live telemetry dashboard showing:
-> - Temperature & Humidity curves
-> - CO₂ level with threshold alert band
-> - Ventilation status (ON/OFF)
-> - Solar charge percentage
-> - *(Optional)* ML anomaly prediction confidence
-
----
-
-## 📁 Project Structure
-
-```
-AETHER-1/
-├── firmware/
-│   └── esp32_main.ino          # ESP32 sensor + MQTT code
-├── simulation/
-│   └── wokwi_config.json       # Wokwi simulation setup
-├── dashboard/
-│   ├── main.py                 # Python telemetry dashboard
-│   └── streamlit_app.py        # Optional Streamlit ML dashboard
-├── ml/                         # Optional ML layer
-│   ├── data/                   # Logged sensor CSVs
-│   ├── train.py                # Model training script
-│   ├── model.tflite            # Quantized model for ESP32
-│   └── inference.py            # Inference pipeline
-├── cfd/
-│   └── co2_stagnation_sim/     # CFD simulation files
-├── docs/
-│   ├── wiring_diagram.png
-│   ├── figma_blueprint.png
-│   └── problem_statement.md
+```text
+├── firmware/                 # C++ ESP32 source code (Arduino IDE compatible)
+│   ├── main/                 # Main control loop (Sense-Decide-Actuate)
+│   └── lib/                  # Custom sensor and actuator libraries
+├── machine_learning/         # Python scripts for solar tracking prediction
+│   ├── dataset/              # CSV telemetry logs (timestamped via DS3231)
+│   └── model_training.py     # Random Forest regression model
+├── hardware/                 # Circuit schematics and pinouts
+│   ├── wokwi_simulation/     # diagram.json and sketch.ino for Wokwi
+│   └── schematics/           # Wiring diagrams
+├── mechanical_cad/           # 3D models for T-shape PVC structure & mounts
+├── cfd_simulation/           # OpenFOAM/SimScale reports (0-G vs 1-G airflow)
 └── README.md
-```
-
----
-
-##  Getting Started
-
-### 1. Flash the ESP32
-```bash
-# Open firmware/esp32_main.ino in Arduino IDE
-# Set your WiFi credentials and MQTT broker IP
-# Flash to ESP32
-```
-
-### 2. Run the Python Dashboard
-```bash
-pip install -r requirements.txt
-python dashboard/main.py
-```
-
-### 3. Optional — Run ML Inference
-```bash
-# Train model on logged data
-python ml/train.py
-
-# Run prediction dashboard
-streamlit run dashboard/streamlit_app.py
-```
-
----
-
-##  Simulation
-CFD simulation demonstrates CO₂ stagnation pocket formation in microgravity conditions — visualizing the exact problem AETHER-1 solves. Run in OpenFOAM or ANSYS Fluent.
-
-Wokwi simulation available for hardware validation without physical components.
-
----
-
-##  ML Pipeline *(Optional)*
-
-```
-Sensor Data → CSV Logger → Pandas Preprocessing
-     → Feature Engineering (rolling stats, lag features)
-          → LSTM / Isolation Forest
-               → Anomaly Score
-                    → Predictive Ventilation Trigger
-```
-
-Model is quantized to TFLite for optional onboard ESP32 inference.
-
----
-
-##  Built For
-
-**Smart India Hackathon 2024**  
-Domain: Space Technology / Environmental Monitoring  
-Team: [Team Name]  
-College: KSIT Bangalore
-
----
-
-##  Author
-
-**Giogio**  
-Mechanical Engineering — KSIT Bangalore  
-Data & Telemetry Lead — Team Redline Racing (BAJA SAE)  
-[GitHub](https://github.com/) • [LinkedIn](https://linkedin.com/)
-
----
-
-##  License
-
-MIT License — open for extension and research use......
