@@ -7,7 +7,7 @@
 ![Simulation](https://img.shields.io/badge/CFD-OpenFOAM%20%2F%20SimScale-red)
 ![Status](https://img.shields.io/badge/Status-Prototyping-orange)
 
-**Project Sub-zero** is a physical, ML-enhanced, sensor-driven space station analog testbed. Developed as a 5th-semester mechanical engineering and Smart India Hackathon (SIH) prototype, it merges documented architectural advantages from the ISS (node-hub multi-port design) and China’s Tiangong Space Station (T-shaped layout, intermodule shadowing optimization). 
+**Project Sub-zero** is a physical, ML-enhanced, sensor-driven space station analog testbed. Developed as a 5th-semester mechanical engineering and Smart India Hackathon (SIH) prototype, it merges documented architectural advantages from the ISS (node-hub multi-port design) and China’s Tiangong Space Station (T-shaped layout, intermodule shadowing optimization). .
 
 The project demonstrates a complete sense-decide-actuate control loop to solve two critical, unresolved challenges in modern space habitats: microgravity air-stagnation (CO2 pockets) and predictive solar power optimization.
 
